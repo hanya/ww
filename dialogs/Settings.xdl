@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dlg:window PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "dialog.dtd">
+<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="Settings" dlg:left="102" dlg:top="103" dlg:width="260" dlg:height="185" dlg:closeable="true" dlg:moveable="true" dlg:withtitlebar="false">
+ <dlg:bulletinboard>
+  <dlg:fixedline dlg:id="FixedLine1" dlg:tab-index="0" dlg:left="8" dlg:top="7" dlg:width="241" dlg:height="11" dlg:value="Default Settings"/>
+  <dlg:checkbox dlg:id="check_InputLine" dlg:tab-index="1" dlg:left="15" dlg:top="24" dlg:width="140" dlg:height="11" dlg:value="Show input line" dlg:checked="false"/>
+  <!--
+  <dlg:checkbox dlg:id="check_StoreWatches" dlg:tab-index="2" dlg:left="15" dlg:top="41" dlg:width="140" dlg:height="11" dlg:value="Store watches" dlg:checked="false"/>
+  <dlg:fixedline dlg:id="FixedLine2" dlg:tab-index="3" dlg:left="9" dlg:top="58" dlg:width="241" dlg:height="11" dlg:value="Warn if the number of cells to add is higher than setting."/>
+  <dlg:numericfield dlg:id="num_AddCells" dlg:tab-index="4" dlg:left="15" dlg:top="77" dlg:width="41" dlg:height="13" dlg:decimal-accuracy="0" dlg:value="20" dlg:value-min="1" dlg:spin="true"/>
+  -->
+ </dlg:bulletinboard>
+</dlg:window>

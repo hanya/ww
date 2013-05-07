@@ -1,0 +1,28 @@
+
+Watching Window
+
+    This is the extension to watch cell value on spreadsheets of OpenOffice.
+  This one is written in C++ and that can be embedded into sidebar or 
+  task bar (if still there in AOO 4).
+
+Requirements
+    This extension needs the following version: 
+  - Apache OpenOffice 3.4 or later for embedding the extension into the Taskbar
+  - Apache OpenOffice 4.0 or later for embedding the extension into the Sidebar
+
+Building
+    Setup OpenOffice SDK and set your environmental variables according to 
+  the descriptions about the SDK.
+  
+    To generate current resource files if not yet updated: 
+  > python genres.py
+  
+    Then use Makefile to compile the code and pack into OXT package.
+  > make
+  
+    You can find new package under files directory if the building 
+  is successfully finisihed.
+
+License
+    The MIT license.
+
