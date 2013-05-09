@@ -12,7 +12,7 @@ xmlns:d="http://openoffice.org/extensions/description/2006">
 <identifier value="mytools.calc.CppWatchingWindow" />
 <version value="{VERSION}" />
 <dependencies>
-<OpenOffice.org-minimal-version value="3.4" d:name="OpenOffice.org 3.4" />
+{DEPS}
 </dependencies>
 <!--
 <registration>
@@ -29,10 +29,13 @@ xmlns:d="http://openoffice.org/extensions/description/2006">
 </extension-description>
 <!--
 <update-information>
-<src xlink:href="https://raw.github.com/hanya/WatchingWindow/master/files/WatchingWindow.update.xml"/>
+<src xlink:href="https://raw.github.com/hanya/ww/master/files/WatchingWindow.update.xml"/>
 </update-information>
 -->
 </description>"""
+
+min_deps = """<OpenOffice.org-minimal-version value="{MINIMAL_VERSION}" d:name="OpenOffice.org {MINIMAL_VERSION}" />"""
+max_deps = """<d:OpenOffice.org-maximal-version value="{MAXIMAL_VERSION}" d:name="OpenOffice.org {MAXIMAL_VERSION}" />"""
 
 update_feed = """<?xml version="1.0" encoding="UTF-8"?>
 <description xmlns="http://openoffice.org/extensions/update/2006" 
@@ -41,10 +44,10 @@ xmlns:d="http://openoffice.org/extensions/description/2006">
 <identifier value="mytools.calc.CppWatchingWindow" />
 <version value="{VERSION}" />
 <dependencies>
-<d:OpenOffice.org-minimal-version value="3.4" d:name="OpenOffice.org 3.4" />
+{DEPS}
 </dependencies>
 <update-download>
-<src xlink:href="https://raw.github.com/hanya/WatchingWindow/master/files/WatchingWindow-{VERSION}.oxt"/>
+<src xlink:href="https://raw.github.com/hanya/ww/master/files/WatchingWindow-{VERSION}.oxt"/>
 </update-download>
 </description>
 """
@@ -164,7 +167,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
 
 
-def genereate_description(d, out_dir):
+def genereate_description(d, out_dir, minimal_version="4.0", maximal_version=None):
     version = read_version()
     
     names = []
@@ -179,8 +182,17 @@ def genereate_description(d, out_dir):
             f.write(desc.encode("utf-8"))
         descs.append("<src lang=\"{LANG}\" xlink:href=\"descriptions/desc_{LANG}.txt\"/>".format(LANG=lang))
     
-    return desc_h.format(
-        VERSION=version, NAMES="\n".join(names), DESCRIPTIONS="\n".join(descs))
+    args = {"VERSION": version, "NAMES": "\n".join(names), "DESCRIPTIONS": "\n".join(descs)}
+    deps = []
+    if minimal_version:
+        deps.append(min_deps.format(MINIMAL_VERSION=minimal_version))
+    if maximal_version:
+        deps.append(max_deps.format(MAXIMAL_VERSION=maximal_version))
+    if deps:
+        args["DEPS"] = "\n".join(deps)
+    else:
+        args["DEPS"] = ""
+    return desc_h.format(**args)
 
 
 def read_version():
@@ -288,13 +300,35 @@ def write_resource(res_path, d):
         f.write("# comment\n")
         f.write(lines.encode("utf-8"))
 
-def write_update_feed():
+def write_update_feed(minimal_version="4.0", maximal_version=None):
     version = read_version()
-    s = update_feed.format(VERSION=version)
+    args = {"VERSION": version}
+    deps = []
+    if minimal_version:
+        deps.append(min_deps.format(MINIMAL_VERSION=minimal_version))
+    if maximal_version:
+        deps.append(max_deps.format(MAXIMAL_VERSION=maximal_version))
+    if deps:
+        args["DEPS"] = "\n".join(deps)
+    else:
+        args["DEPS"] = ""
+    
+    s = update_feed.format(**args)
     with open(os.path.join(".", "files", "WatchingWindow.update.xml"), "w") as f:
         f.write(s.encode("utf-8"))
 
+import argparse
+
 def main():
+    parser = argparse.ArgumentParser(description="Generates resources for the package")
+    parser.add_argument("-min", dest="min", default="4.0", 
+                        help="Minimal-version dependencies in description.xml")
+    parser.add_argument("-max", dest="max", default=None, 
+                        help="Maximal-version dependencies in description.xml")
+    args = parser.parse_args()
+    min_version = args.min
+    max_version = args.max
+    
     out_dir = "gen"
     
     prefix = "strings_"
@@ -330,11 +364,11 @@ def main():
     store_xcu_data(SidebarXCU, "Sidebar.xcu")
     store_xcu_data(OptionsDialogXCU, "OptionsDialog.xcu")
     
-    s = genereate_description(locales, out_dir)
+    s = genereate_description(locales, out_dir, min_version, max_version)
     with open(os.path.join(out_dir, "description.xml"), "w") as f:
         f.write(s)#.encode("utf-8"))
     
-    write_update_feed()
+    write_update_feed(min_version, max_version)
 
 
 if __name__ == "__main__":
