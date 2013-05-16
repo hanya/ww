@@ -184,15 +184,15 @@ OUString Row::getTooltipFromData( const OUString & rSheet, const OUString & rCel
                     const OUString & rValue, const OUString & rFormula ) const
 {
     // ToDo RTL
-    static const OUString sSuffix = A2S( ": " );
-    static const OUString sLf = A2S( "\n" );
+    static const sal_Unicode sSuffix[] = {':', ' '};
+    static const sal_Unicode sLf[] = {'\n'};
     
     ::rtl::OUStringBuffer buff;
     return 
-        buff.append( m_sSheetLabel ).append( sSuffix ).append( rSheet ).append( sLf )
-            .append( m_sCellLabel  ).append( sSuffix ).append( rCell  ).append( sLf )
-            .append( m_sValueLabel ).append( sSuffix ).append( rValue ).append( sLf )
-            .append( m_sFormulaLabel ).append( sSuffix ).append( rFormula )
+        buff.append( m_sSheetLabel ).append( sSuffix, 2 ).append( rSheet ).append( sLf, 1 )
+            .append( m_sCellLabel  ).append( sSuffix, 2 ).append( rCell  ).append( sLf, 1 )
+            .append( m_sValueLabel ).append( sSuffix, 2 ).append( rValue ).append( sLf, 1 )
+            .append( m_sFormulaLabel ).append( sSuffix, 2 ).append( rFormula )
             .makeStringAndClear();
 }
 
