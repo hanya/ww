@@ -65,16 +65,10 @@ Reference< ::com::sun::star::resource::XStringResourceWithLocation > getResource
                 getConfig( xContext, OUSTR( "/org.openoffice.Setup/L10N" ) ), UNO_QUERY_THROW );
         OUString aLoc;
         xPropSet->getPropertyValue( OUSTR( "ooLocale" ) ) >>= aLoc;
-        const sal_Int32 nPos = aLoc.indexOfAsciiL( "-", 1 );
-        OUString aLanguage, aCountry;
-        if ( nPos > 0 && aLoc.getLength() > nPos )
-        {
-            aLanguage = aLoc.copy( 0, nPos +1 );
-            aCountry = aLoc.copy( nPos + 1 );
-        }
-        else
-            aLanguage = aLoc;
-        aLocale = ::com::sun::star::lang::Locale( aLanguage, aCountry, OUString() );
+        sal_Int32 nIndex = 0;
+        aLocale.Language = aLoc.getToken( 0, '-', nIndex );
+        aLocale.Country = aLoc.getToken( 0, '-', nIndex );
+        aLocale.Variant = aLoc.getToken( 0, '-', nIndex );
     }
     catch ( Exception & )
     { }
