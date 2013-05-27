@@ -869,11 +869,7 @@ void WWView::executeContextMenu( const ::sal_Int32 nX, const ::sal_Int32 nY )
         m_xPopupMenu->enableItem( nGotoId, bGotoState );
         
         const sal_Int16 nId = m_xPopupMenu->execute( xPeer, 
-#ifdef UNIFIED_MENU_API
-                ::com::sun::star::awt::Point( nX, nY ), 
-#else
                 ::com::sun::star::awt::Rectangle( nX, nY, 0, 0 ), 
-#endif
                 ::com::sun::star::awt::PopupMenuDirection::EXECUTE_DEFAULT );
         if ( nId >= nGotoId )
         {
