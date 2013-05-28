@@ -924,11 +924,7 @@ void WWView::showOptionPopup()
         //xPopupMenu->checkItem( (sal_Int16)CMD_STORE_WATCHES, m_bStoreWatches );
         
         const sal_Int16 nId = xPopupMenu->execute( xPeer, 
-#ifdef UNIFIED_MENU_API
-                ::com::sun::star::awt::Point( aRect.X, aRect.Y + aRect.Height ), 
-#else
                 ::com::sun::star::awt::Rectangle( aRect.X, aRect.Y + aRect.Height, 0, 0 ), 
-#endif
                 ::com::sun::star::awt::PopupMenuDirection::EXECUTE_DEFAULT );
         if ( nId > 0 )
             executeCommand( (int)nId );
@@ -1399,6 +1395,5 @@ void WWView::createWindow()
     {
     }
 }
-
 
 } // namespace ww
