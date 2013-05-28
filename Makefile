@@ -5,7 +5,7 @@ include $(SETTINGS)/settings.mk
 include $(SETTINGS)/std.mk
 include $(SETTINGS)/dk.mk
 
-EXTENSION_VERSION=$(shell cat VERSION)
+EXTENSION_VERSION=$(shell $(CAT) VERSION)
 EXTENSION_ID=mytools.calc.CppWatchingWindow
 EXTENSION_NAME=WatchingWindow
 EXTENSION_DISPLAY_NAME=WatchingWindow
