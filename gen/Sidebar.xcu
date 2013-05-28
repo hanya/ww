@@ -22,7 +22,7 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
           <value>vnd.sun.star.extension://mytools.calc.CppWatchingWindow/icons/ww_24.png</value>
         </prop>
         <prop oor:name="HighContrastIconURL" oor:type="xs:string">
-          <value>vnd.sun.star.extension://mytools.calc.CppWatchingWindow/icons/ww_24.png</value>
+          <value>vnd.sun.star.extension://mytools.calc.CppWatchingWindow/iconsh/ww_24.png</value>
         </prop>
         <prop oor:name="ContextList">
           <value oor:separator=";">
